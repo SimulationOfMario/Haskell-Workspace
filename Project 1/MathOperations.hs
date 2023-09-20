@@ -1,19 +1,19 @@
 module MathOperations where
 
+import System.IO
 import Data.List
 
 sumNumbers :: IO ()
 sumNumbers = do
 
- let numbers = [] :: [Double]
-
  putStrLn "Write the first number: "
+ hFlush stdout
  line <- getLine
- let numbers = read line :: Double
+ let numbers = [read line] :: [Double]
 
  putStrLn "Write a second number: "
  line <- getLine
- let y = read line :: Double
+ -- numbers = numbers:(read line)
 
 
 
