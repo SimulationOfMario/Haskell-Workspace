@@ -9,17 +9,14 @@ sumNumbers = do
  putStrLn "Write the first number: "
  hFlush stdout
  line <- getLine
- let numbers = [read line] :: [Double]
+ let x = read line :: Double
 
  putStrLn "Write a second number: "
  line <- getLine
- -- numbers = numbers:(read line)
-
-
-
+ let y = read line :: Double
 
  putStr "Sum result: "
- 
+ print (x + y)
 
  putStrLn "\nPress enter for back to main menu."
  getLine
