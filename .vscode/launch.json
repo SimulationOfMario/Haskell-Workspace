@@ -4,7 +4,6 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        
         {
             "type": "ghc",
             "request": "launch",
@@ -17,7 +16,7 @@
             "stopOnEntry": false,
             "mainArgs": "",
             "ghciPrompt": "H>>= ",
-            "ghciInitialPrompt": "> ",
+            "ghciInitialPrompt": "Prelude> ",
             "ghciCmd": "stack ghci --with-ghc=ghci-dap --test --no-load --no-build --main-is TARGET",
             "ghciEnv": {},
             "logFile": "${workspaceFolder}/.vscode/phoityne.log",
@@ -36,7 +35,7 @@
             "stopOnEntry": false,
             "mainArgs": "",
             "ghciPrompt": "H>>= ",
-            "ghciInitialPrompt": "> ",
+            "ghciInitialPrompt": "Prelude> ",
             "ghciCmd": "cabal repl -w ghci-dap --repl-no-load --builddir=${workspaceFolder}/.vscode/dist-cabal-repl",
             "ghciEnv": {},
             "logFile": "${workspaceFolder}/.vscode/phoityne.log",
