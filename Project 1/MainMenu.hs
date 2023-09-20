@@ -10,6 +10,7 @@
 import System.IO
 import System.Process
 import Control.Monad
+import MathOperations
 
 -- >> MAIN MENU PROGRAM FUNCTIONS << --
 
@@ -63,7 +64,7 @@ mainMenu = do
 
 -- | Function that acts like a switch for the main menu actions
 evaluateAction :: String -> IO ()
-evaluateAction "SUM" = sumTwoNumbers
+evaluateAction "SUM" = sumNumbers
 evaluateAction _ = nop
 
 
@@ -71,22 +72,3 @@ evaluateAction _ = nop
 nop :: IO ()
 nop = do
   return ()
-
-
-
-
-
--- >> SUBFUNCTIONS << --
-sumTwoNumbers :: IO ()
-sumTwoNumbers = do
- putStrLn "Write a number: "
- line <- getLine
- let x = read line :: Int
-
- putStrLn "Write a second number: "
- line <- getLine
- let y = read line :: Int
-
- putStr "Sum result: "
- print (x + y)
-
