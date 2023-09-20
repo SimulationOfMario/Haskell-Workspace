@@ -1,12 +1,20 @@
+{- | 
+  Module: MathOperations.hs
+  Author: SimulationOfMario
+  Description: 
+    
+-}
+
 module MathOperations where
 
+-- >> IMPORTATIONS << --
 import System.IO
 import Data.List
 
 sumNumbers :: IO ()
 sumNumbers = do
 
- putStrLn "Write the first number: "
+ putStrLn "\nWrite the first number: "
  hFlush stdout
  line <- getLine
  let x = read line :: Double
