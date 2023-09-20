@@ -12,11 +12,7 @@ main = do
         putStr "Type YES to quit: "
         hFlush stdout 
         str <- getLine
-        if str == "YES"
-            then return ()
-            else 
-                -- system "cls"
-                loop
+        unless (str == "YES") loop
   loop 
   putStrLn "Goodbye!"
 
@@ -29,11 +25,7 @@ mainMenu = do
         putStr "Select an action: "
         hFlush stdout
         str <- getLine
-        if str == "QUIT"
-            then return()
-            else
-                -- system "cls"
-                loop
+        unless (str == "QUIT") loop
   loop            
 
 
@@ -50,5 +42,5 @@ sumTwoNumbers = do
  let y = read line :: Int
 
  putStr "Sum result: "
- putStrLn $ show (x + y)
+ print (x + y)
 
