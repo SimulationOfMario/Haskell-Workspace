@@ -9,6 +9,7 @@ module MathOperations where
 
 -- >> IMPORTATIONS << --
 import System.IO
+import System.Process
 import Data.List
 
 sumNumbers :: IO ()
@@ -28,4 +29,5 @@ sumNumbers = do
 
  putStrLn "\nPress enter for back to main menu."
  getLine
+ system "cls"
  return ()
