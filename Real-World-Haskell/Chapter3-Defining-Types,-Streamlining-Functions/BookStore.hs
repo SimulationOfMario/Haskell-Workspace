@@ -41,4 +41,47 @@ data BillingInfo = CreditCard CardNumber CardHolder Address -- Three arguments c
                 deriving (Show)
 
 -- Bool in Haskell is a data type that it can be in two different forms, both are constructors with zero arguments
-data Bool = False | True  
+data Bool = False | True 
+
+-- Get-Functions for every BookInfo value
+bookID :: BookInfo -> Int
+bookID (Book id title authors) = id
+
+bookTitle :: BookInfo -> String
+bookTitle (Book id title authors) = title
+
+bookAuthors :: BookInfo -> [String]
+bookAuthors (Book id title authors) = authors
+
+
+-- Get-Functions for every BookInfo value but using a Wild Card: _ 
+nicerID :: BookInfo -> Int
+nicerID (Book id _ _ ) = id
+
+nicerTitle :: BookInfo -> String
+nicerTitle (Book _ title _ ) = title
+
+nicerAuthors :: BookInfo -> [String]
+nicerAuthors (Book _ _ authors) = authors
+
+
+-- The last functions are Boilerplate, there is a solution:
+-- This struct defines its get-functions in a compact form
+-- This is named Record Syntax
+data Customer = Customer {
+                    customerID :: CustomerID
+                ,   customerName :: String
+                ,   customerAddress :: Address
+            } deriving (Show)
+
+-- One way to construct
+customer1 = Customer 34234 "John" ["Paris", "France"]
+
+-- Another way to construct (see you can put the values in any order)
+customer2 = Customer {
+    customerID = 9822 ,
+    customerAddress = ["Oslo", "Norway"] ,
+    customerName = "Fran"
+}
+
+-- Record Syntax structures also are showed in a different way
