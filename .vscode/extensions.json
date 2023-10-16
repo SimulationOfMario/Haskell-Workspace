@@ -1,0 +1,17 @@
+{
+    "recommendations": [
+        "aaron-bond.better-comments",
+        "haskell.haskell",
+        "phoityne.phoityne-vscode",
+        "justusadam.language-haskell",
+        "hoovercj.haskell-linter",
+        "eriksik2.vscode-ghci",
+        "github.vscode-pull-request-github",
+        "usernamehw.errorlens",
+        "formulahendry.code-runner",
+        "ms-vsliveshare.vsliveshare",
+        "tinaciousdesign.theme-tinaciousdesign",
+        "visualstudioexptteam.vscodeintellicode",
+        "visualstudioexptteam.intellicode-api-usage-examples"
+    ]
+}
