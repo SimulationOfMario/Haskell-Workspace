@@ -14,5 +14,6 @@ quux :: t -> [Char]
 quux a = let a = "foo"
          in a ++ "eek!"
 
--- GHC & GHCI has a helpful option: -fwarn-name-shadowing
--- When enabled, GHC will print a warning message any time we shadow a name
+-- * [H E L P F U L]
+-- * GHC & GHCI has a helpful option: -fwarn-name-shadowing
+-- * When enabled, GHC will print a warning message any time we shadow a name
