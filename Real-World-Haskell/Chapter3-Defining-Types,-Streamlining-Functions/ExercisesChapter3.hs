@@ -17,11 +17,6 @@ meanOfList x    = sumAll x / fromIntegral (listLength x)
 -- ? fromIntegral is a function that transform a integer into a floating-point number (fractional)
 
 
--- TODO: Write a function that turn a list into a palindrome (it should read the same both backward and forward)
-turnIntoPalindrome :: [a] -> [a]
-turnIntoPalindrome x = x ++ reverse x
-
-
 -- TODO: Write a function that determines whether its input list is a palindrome
 isPalindrome :: (Eq a) => [a] -> Bool
 isPalindrome x      = checkList x (reverse x)
@@ -30,5 +25,24 @@ isPalindrome x      = checkList x (reverse x)
             | null x && null y              = True
             | head x == head y              = checkList (tail x) (tail y)
             | otherwise                     = False
+
+
+-- TODO: Write a function that turn a list into a palindrome (it should read the same both backward and forward)
+-- * EXTRA: The function returns the same list if the input is a Palindrome
+turnIntoPalindrome :: (Eq a) => [a] -> [a]
+turnIntoPalindrome x = if isPalindrome x 
+                       then x
+                       else x ++ reverse x
+
+
+-- TODO: Write a function that sorts a list of lists based on the length of each sublist
+sortByLength :: [[a]] -> [[a]]
+sortByLength []     = []
+sortByLength x      = eval [] (head x) (sortByLength (tail x))
+    where 
+        eval [] elem _      = [elem]
+        eval list elem rest
+            |      
+
 
  
