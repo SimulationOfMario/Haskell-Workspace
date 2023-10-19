@@ -58,13 +58,37 @@ intersperse _ [x]               = x
 intersperse s (x:xs)            = x ++ [s] ++ intersperse s xs
 
 
--- TODO: Write a function that dertermines the height of a Binary Tree.
+-- TODO: Write a function that determines the height of a Binary Tree
 data BinaryTree a = Node a (BinaryTree a) (BinaryTree a) 
                   | Empty  
 
 height :: BinaryTree a -> Int
 height Empty                   = 0
 height (Node a left right)     = 1 + max (height left) (height right)
+
+
+-- TODO: Define a Direction data type formed by three two-dimensional points (A,B,C) that lets you represent these posibilities:
+-- TODO: If we look at the angle formed by the line segment from A to B and the line segment from B to C, it turns left, right or froms a straight line
+data Direction = LeftDirection | RightDirection | StraightDirection deriving (Show)
+type CartesianPoint2D = (Double, Double)
+type Vector2D = (Double, Double)
+
+
+-- TODO: Write a function that calculates the turn made by three two-dimensional points and returns a Direction
+calcDir :: CartesianPoint2D -> CartesianPoint2D -> CartesianPoint2D -> Direction
+calcDir (a1,a2) (b1,b2) (c1,c2) 
+    | angle > 0             = LeftDirection
+    | angle < 0             = RightDirection
+    | otherwise             = StraightDirection
+    where 
+        (u1,u2) :: Vector2D = (b1-a1, b2-a2) -- Vector A->B
+        (v1,v2) :: Vector2D = (c1-b1, c2-b2) -- Vector B->C
+        angle :: Double = 0 -- ? Complete...
+
+
+
+
+
 
 
 
