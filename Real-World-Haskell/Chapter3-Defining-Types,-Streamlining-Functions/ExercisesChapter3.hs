@@ -58,4 +58,14 @@ intersperse _ [x]               = x
 intersperse s (x:xs)            = x ++ [s] ++ intersperse s xs
 
 
+-- TODO: Write a function that dertermines the height of a Binary Tree.
+data BinaryTree a = Node a (BinaryTree a) (BinaryTree a) 
+                  | Empty  
+
+height :: BinaryTree a -> Int
+height Empty                   = 0
+height (Node a left right)     = 1 + max (height left) (height right)
+
+
+
  

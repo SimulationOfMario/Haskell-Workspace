@@ -1,0 +1,6 @@
+{
+    "background.windowBackgrounds": [
+        "${vscode:workspace}/Pictures/Bg Pictures For VSCode/**"
+
+    ]
+}
