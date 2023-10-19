@@ -1,6 +1,12 @@
 {
+    //Directorios de donde se sacan las imágenes para el fondo general
     "background.windowBackgrounds": [
         "${vscode:workspace}/Pictures/Bg Pictures For VSCode/**"
+        
+    ],
+    
+    //Velocidad en segundos del cambio de imagen de fondo
+    "background.backgroundChangeTime": [10,0,0,0]
 
-    ]
 }
+
