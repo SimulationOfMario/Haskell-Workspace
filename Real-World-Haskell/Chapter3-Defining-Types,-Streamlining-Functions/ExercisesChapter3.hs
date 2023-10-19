@@ -38,11 +38,24 @@ turnIntoPalindrome x = if isPalindrome x
 -- TODO: Write a function that sorts a list of lists based on the length of each sublist
 sortByLength :: [[a]] -> [[a]]
 sortByLength []     = []
-sortByLength x      = eval [] (head x) (sortByLength (tail x))
+sortByLength x      = sort (head x) (sortByLength (tail x))
     where 
-        eval [] elem _      = [elem]
-        eval list elem rest
-            |      
+        sort :: [a] -> [[a]] -> [[a]]
+        sort elem []                            = [elem]            -- * Caso base, si es el último elemento de la lista (por ser el más grande en length)
+        sort elem (r:rs)
+            | listLength elem < listLength r    = elem:r:rs         -- * Si elem.length es menor, se añade antes de r
+            | otherwise                         = r:sort elem rs    -- * Si elem.length es mayor, se añade en rs (haciendo sort de nuevo)
+
+
+-- TODO: Write a function that joins a list of lists together using a separador value
+-- * ARGUMENTS:
+-- * a : The separator, it must be the same element as the type of the elements of the lists from the list
+-- * [[a]] : The list of lists that will be joined
+-- * OUTPUT: A list of the elements of the lists separated by the separator which are also a element 
+intersperse :: a -> [[a]] -> [a]
+intersperse _ []                = []
+intersperse _ [x]               = x
+intersperse s (x:xs)            = x ++ [s] ++ intersperse s xs
 
 
  
