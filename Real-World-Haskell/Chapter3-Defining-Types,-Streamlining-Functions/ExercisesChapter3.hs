@@ -83,4 +83,4 @@ calcDir (a1,a2) (b1,b2) (c1,c2)
     where 
         (u1,u2) :: Vector2D = (b1-a1, b2-a2) -- Vector A->B
         (v1,v2) :: Vector2D = (c1-b1, c2-b2) -- Vector B->C
-        angle :: Double = 0 -- ? Complete...
+        angle :: Double = u1/v1 - u2/v2 -- If u1/v1 = u2/v2 -> Three points alineated
