@@ -1,12 +1,22 @@
 {
-    //Directorios de donde se sacan las imágenes para el fondo general
+    //Directories where is located the images for the background
     "background.windowBackgrounds": [
         "${vscode:workspace}/Pictures/Bg Pictures For VSCode/**"
         
     ],
     
-    //Velocidad en segundos del cambio de imagen de fondo
-    "background.backgroundChangeTime": [10,0,0,0]
+    //Seconds between every change in the background
+    "background.backgroundChangeTime": [
+        10,
+        0,
+        0,
+        0
+    ],
+    
+    //Arguments for ghci 
+    "haskellShell.ghci.arguments": [
+        " -XScopedTypeVariables "
+    ]
 
 }
 
