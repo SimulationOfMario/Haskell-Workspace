@@ -96,8 +96,11 @@ calcDirList x
         z = tail y
 
 
-testSet :: [CartesianPoint2D]
-testSet = [(9,0),(5,-4),(7,5),(6,-1),(2,2),(4,3),(0,1),(-1,-3),(2,-1),(1,4),(8,-2),(4,1)]
+-- * Examples used for grahamsAlgorithm
+testSet1 :: [CartesianPoint2D]
+testSet1 = [(9,0),(5,-4),(7,5),(6,-1),(2,2),(4,3),(0,1),(-1,-3),(2,-1),(1,4),(8,-2),(4,1)]
+testSet2 :: [CartesianPoint2D]
+testSet2 = [(-1,0),(8,1),(3,9),(1.5,-9),(1.3,7.2),(0.3,4.1),(-1.3,2.9),(-10,0.9),(-6,2.2)]
 
 
 -- TODO: Implement the Graham's scan algorithm for the convex hull of a set of 2D Points
@@ -107,7 +110,7 @@ grahamsAlgorithm points
     | isSet points []           = preAlgorithm points (lowestPoint (head points) (tail points)) -- * Choose the first point as the possible lowest value
     | otherwise                 = error "The input is not a Set of points (it has repeated values)"
     where
-        -- * Checks if the list of points is a Set (it has not repeated points)
+        -- * PART 1: Checks if the list of points is a Set (it has not repeated points)
         isSet :: [CartesianPoint2D] -> [CartesianPoint2D] -> Bool
         isSet [] list = True
         isSet points list
@@ -121,7 +124,8 @@ grahamsAlgorithm points
                     | p /= head list    = check p (tail list)
                     | otherwise         = False
 
-        -- * Finds the point in the list with the lowest Y (and lowest X if there is multiple Y lowest values)
+
+        -- * PART 2: Finds the point in the list with the lowest Y (and lowest X if there is multiple Y lowest values)
         lowestPoint :: CartesianPoint2D -> [CartesianPoint2D] -> CartesianPoint2D
         lowestPoint lowest []                                                                       = lowest
         lowestPoint (minX, minY) ((candX, candY):rs)
@@ -129,7 +133,8 @@ grahamsAlgorithm points
             | minY == candY && minX > candX     {- If there is a same lowest Y but X is lower -}    = lowestPoint (candX,candY) rs
             | otherwise                         {- If min is still the lowest Y -}                  = lowestPoint (minX,minY) rs
 
-        -- * Prepare the Set for the real algorithm
+
+        -- * PARTE 3: Prepare the Set for the real algorithm (sorts the set)
         preAlgorithm :: [CartesianPoint2D] -> CartesianPoint2D -> [CartesianPoint2D]
         preAlgorithm points lowestP = algorithm (sortByAngle points lowestP [] ++ [lowestP]) lowestP
             where
@@ -144,14 +149,8 @@ grahamsAlgorithm points
                         (p1,p2) :: CartesianPoint2D = refPoint
                         (cp1,cp2) :: Vector2D = (c1-p1, c2-p2) -- Vector from refPoint to candidatePoint
                         (xp1,xp2) :: Vector2D = (1,0) -- Vectpr from refPoint to X-axis point
-                        -- (xa1,xa2) :: Vector2D = (1,0) -- Vector of the X-axis
-                        -- angleCos :: Double = (cp1*xa1+cp2*xa2)/(sqrt(cp1*cp1+cp2*cp2)*sqrt(xa1*xa1+xa2*xa2))
-                        angleCos :: Double = (cp1*xp1 + cp2*xp2) / (sqrt (cp1^2+cp2^2) * sqrt (xp1^2+xp2^2)) -- Value between -1 and 1
 
-                        -- * Extracts the points from the tuples
-                        getOnlyPoints :: [(CartesianPoint2D, Double)] -> [CartesianPoint2D]
-                        getOnlyPoints []         = []
-                        getOnlyPoints x          = fst (head x) : getOnlyPoints (tail x)
+                        angleCos :: Double = (cp1*xp1 + cp2*xp2) / (sqrt (cp1^2+cp2^2) * sqrt (xp1^2+xp2^2)) -- Value between -1 and 1
 
                         -- * Adds the tuple in the list in its corresponding sorted position
                         addTupleSorted :: (CartesianPoint2D, Double) -> [(CartesianPoint2D, Double)] -> [(CartesianPoint2D, Double)]
@@ -160,8 +159,16 @@ grahamsAlgorithm points
                             | ac > snd (head list)                                          = (p,ac) : list
                             | otherwise                                                     = head list : addTupleSorted (p,ac) (tail list)
 
-        -- * The Graham's algorithm
-        -- * Inputs: All the points of the Set sorted in increasing order of the angle they and the lowest point found make with the x-axis // All the points that are the solution
+                        -- * Extracts the points from the tuples
+                        getOnlyPoints :: [(CartesianPoint2D, Double)] -> [CartesianPoint2D]
+                        getOnlyPoints []         = []
+                        getOnlyPoints x          = fst (head x) : getOnlyPoints (tail x)
+
+
+        -- * PART 4: The Graham's algorithm (search part)
+        -- * First Input: All the points of the Set sorted in increasing order of the angle they and the lowest point found make with the x-axis
+        -- * Second Input: The reference point (start point)
+        -- * Output: All the points that make the solution
         algorithm :: [CartesianPoint2D] -> CartesianPoint2D -> [CartesianPoint2D]
         algorithm cands sol = sol : cands
-        -- !!! MISSED !!!
+        -- !!! ALL THIS PART IS UNCOMPLETED !!!
