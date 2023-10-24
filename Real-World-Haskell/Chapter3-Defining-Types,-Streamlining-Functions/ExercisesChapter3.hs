@@ -82,8 +82,8 @@ calcDir (a1,a2) (b1,b2) (c1,c2)
     | otherwise             = StraightDirection
     where
         (u1,u2) :: Vector2D = (b1-a1, b2-a2) -- Vector A->B
-        (v1,v2) :: Vector2D = (c1-b1, c2-b2) -- Vector B->C
-        angle :: Double = u1/v1 - u2/v2 -- If u1/v1 = u2/v2 -> Three points alineated
+        (v1,v2) :: Vector2D = (c1-a1, c2-a2) -- Vector A->C
+        angle :: Double = u1*v2 - u2*v1 -- If u1/v1 = u2/v2 -> Three points alineated
 
 
 -- TODO: Write a function that takes a list of CartesianPoint2D and computes the direction of each succesive triple (returns a list of Directions)
@@ -98,9 +98,12 @@ calcDirList x
 
 -- * Examples used for grahamsAlgorithm
 testSet1 :: [CartesianPoint2D]
-testSet1 = [(9,0),(5,-4),(7,5),(6,-1),(2,2),(4,3),(0,1),(-1,-3),(2,-1),(1,4),(8,-2),(4,1)]
-testSet2 :: [CartesianPoint2D]
-testSet2 = [(-1,0),(8,1),(3,9),(1.5,-9),(1.3,7.2),(0.3,4.1),(-1.3,2.9),(-10,0.9),(-6,2.2)]
+testSet1 = [(0,-5.4), (3.2,-4), (6,-1), (5,2), (2,4), (0,5.2),
+            (-3,4), (-5,1), (-5,-2), (-5,-4), (-3,-4), (0,0), (1,1),
+            (-3,0), (2,3), (-3,-1), (-2,-1), (2,2), (-3,3),
+            (-2,2), (1,-2), (3,-1), (4,1), (-2,-3), (0,3),
+            (3,-3), (3,0)]
+        -- Solution: [(0.0,-5.4),(3.2,-4.0),(6.0,-1.0),(5.0,2.0),(2.0,4.0),(0.0,5.2),(-3.0,4.0),(-5.0,1.0),(-5.0,-4.0),(0.0,-5.4)]
 
 
 -- TODO: Implement the Graham's scan algorithm for the convex hull of a set of 2D Points
@@ -136,7 +139,7 @@ grahamsAlgorithm points
 
         -- * PARTE 3: Prepare the Set for the real algorithm (sorts the set)
         preAlgorithm :: [CartesianPoint2D] -> CartesianPoint2D -> [CartesianPoint2D]
-        preAlgorithm points lowestP = algorithm (sortByAngle points lowestP [] ++ [lowestP]) lowestP
+        preAlgorithm points lowestP = algorithm (lowestP : sortByAngle points lowestP [] ++ [lowestP]) []
             where
                 -- * Sorts the Set of points according to the angle they and the lowest point found make with the x-axis
                 sortByAngle :: [CartesianPoint2D] -> CartesianPoint2D -> [(CartesianPoint2D, Double)] -> [CartesianPoint2D]
@@ -148,7 +151,7 @@ grahamsAlgorithm points
                         (c1,c2) :: CartesianPoint2D = head points
                         (p1,p2) :: CartesianPoint2D = refPoint
                         (cp1,cp2) :: Vector2D = (c1-p1, c2-p2) -- Vector from refPoint to candidatePoint
-                        (xp1,xp2) :: Vector2D = (1,0) -- Vectpr from refPoint to X-axis point
+                        (xp1,xp2) :: Vector2D = (1,0)          -- Vector from refPoint to X-axis point
 
                         angleCos :: Double = (cp1*xp1 + cp2*xp2) / (sqrt (cp1^2+cp2^2) * sqrt (xp1^2+xp2^2)) -- Value between -1 and 1
 
@@ -166,9 +169,16 @@ grahamsAlgorithm points
 
 
         -- * PART 4: The Graham's algorithm (search part)
-        -- * First Input: All the points of the Set sorted in increasing order of the angle they and the lowest point found make with the x-axis
-        -- * Second Input: The reference point (start point)
+        -- * Input: All the points of the Set sorted in increasing order of the angle they and the lowest point found make with the x-axis
+        -- * Input: An empty list that will become the solution
         -- * Output: All the points that make the solution
-        algorithm :: [CartesianPoint2D] -> CartesianPoint2D -> [CartesianPoint2D]
-        algorithm cands sol = sol : cands
-        -- !!! ALL THIS PART IS UNCOMPLETED !!!
+        algorithm :: [CartesianPoint2D] -> [CartesianPoint2D] -> [CartesianPoint2D]
+        algorithm [x] sol                   = reverse (x:sol)                   -- Algorithm's end
+        algorithm x []                      = algorithm (tail x) [head x]       -- Algorithm's start
+        algorithm (x:xs) sol                = case dir of
+                                              LeftDirection     -> algorithm xs (x:sol)                           -- Accept X point case (Left)
+                                              _                 -> algorithm (head sol:xs) (tail sol)             -- Delete Y point case (Right or Straight)
+            where
+                dir :: Direction
+                dir = calcDir (head sol) x (head xs)
+
