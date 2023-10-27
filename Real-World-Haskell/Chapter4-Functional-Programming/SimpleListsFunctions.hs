@@ -1,5 +1,5 @@
 import Data.List (length, null, head, tail, last, init, concat, reverse, and, or, all, any, (++)) 
--- For use this functions you need to import this
+-- For use this functions you should import this
 
 -- ? Use :type <function> to know its inputs/output
 
