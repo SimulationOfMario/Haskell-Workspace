@@ -1,3 +1,6 @@
+import Data.List (lines, unlines, words, unwords)
+-- For use this functions you should import this
+
 -- * Lines function
 -- Returns a list of subStrings from the input String using \n as the delimiter
 -- ? lines :: String -> [String]
