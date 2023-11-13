@@ -1,3 +1,5 @@
+import System.Environment (getArgs)
+
 -- TODO: Write your own "safe" definitions of the standard partial list functions, but make sure they never fail
 -- ? Hint: Use Maybe type
 
@@ -44,4 +46,20 @@ splitWith2 func list = split list [] []
         split (x:xs) buf sol                            -- Mid iterations:
             | not (func x)      = split xs [x] (sol++[buf])  -- The next value gives False
             | otherwise         = split xs (buf++[x]) sol    -- The next value gives True 
+
+
+-- TODO: Using the command framework of InteractWith.hs, write a program that prints the first word of each line of its input
+firstWordEachLine :: FilePath -> IO ()
+firstWordEachLine inputFile = do
+    input <- readFile inputFile
+    putStrLn (firstWordDetection input)
+        where 
+            firstWordDetection :: String -> String
+            firstWordDetection text = extract (lines text) []
+                where
+                    extract :: [String] -> String -> String
+                    extract [] sol                 = sol
+                    extract (x:xs) sol             
+                        | null sol                     = extract xs [head x]
+                        | otherwise                    = extract xs (sol ++ "\n" ++ [head x])
         
