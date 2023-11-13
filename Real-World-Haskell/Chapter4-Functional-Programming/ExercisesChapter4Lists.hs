@@ -66,19 +66,35 @@ firstWordEachLine inputFile = do
 
 
 -- TODO: Write a program that transposes the text in a file
+-- * You can use the example file that is in this directory: inputTextExample2.txt 
 -- * Example: Input = "hello\nworld\n" | Output = "hw\neo\nlr\nll\nod\n"
-transposeText :: String -> IO ()
-transposeText input = do
-    writeFile "outputTransposed.txt" (transpose (lines input) [])
+transposeText :: FilePath -> IO ()
+transposeText inputFile = do
+    input <- readFile inputFile
+    putStr (transpose (lines input) [])
     where
         transpose :: [String] -> [String] -> String
         transpose list sol              
             | all null list              = concat sol 
             | null sol                   = transpose listTails [listHeads ++ "\n"]
-            | otherwise                  = transpose listTails (¿?)
+            | otherwise                  = transpose listTails (sol ++ [listHeads ++ "\n"])
             where 
-                listHeads = ¿?
-                listTails = ¿?
+                listHeads :: String
+                listHeads = onlyHeads list
 
-                    
-        
+                onlyHeads :: [String] -> String
+                onlyHeads []               = []
+                onlyHeads (x:xs)           
+                    | null x                   = onlyHeads xs
+                    | otherwise                = head x : onlyHeads xs
+
+                listTails :: [String]
+                listTails = onlyTails list
+
+                onlyTails :: [String] -> [String]
+                onlyTails []                   = []
+                onlyTails (x:xs)           
+                    | null x                   = [] : onlyTails xs
+                    | otherwise                = tail x : onlyTails xs
+
+-- * ALL THE EXERCISES WORK! 

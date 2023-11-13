@@ -1,0 +1,10 @@
+hello
+world
+one
+two
+stars
+algorithm
+pointer
+list
+haskell
+real
