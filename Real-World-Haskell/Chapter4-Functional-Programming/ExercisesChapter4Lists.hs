@@ -49,6 +49,7 @@ splitWith2 func list = split list [] []
 
 
 -- TODO: Using the command framework of InteractWith.hs, write a program that prints the first word of each line of its input
+-- * You can use the example file that is in this directory: inputTextExample.txt 
 firstWordEachLine :: FilePath -> IO ()
 firstWordEachLine inputFile = do
     input <- readFile inputFile
@@ -62,4 +63,22 @@ firstWordEachLine inputFile = do
                     extract (x:xs) sol             
                         | null sol                     = extract xs [head x]
                         | otherwise                    = extract xs (sol ++ "\n" ++ [head x])
+
+
+-- TODO: Write a program that transposes the text in a file
+-- * Example: Input = "hello\nworld\n" | Output = "hw\neo\nlr\nll\nod\n"
+transposeText :: String -> IO ()
+transposeText input = do
+    writeFile "outputTransposed.txt" (transpose (lines input) [])
+    where
+        transpose :: [String] -> [String] -> String
+        transpose list sol              
+            | all null list              = concat sol 
+            | null sol                   = transpose listTails [listHeads ++ "\n"]
+            | otherwise                  = transpose listTails (¿?)
+            where 
+                listHeads = ¿?
+                listTails = ¿?
+
+                    
         
