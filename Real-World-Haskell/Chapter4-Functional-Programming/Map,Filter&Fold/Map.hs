@@ -1,5 +1,8 @@
+{-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
+{-# HLINT ignore "Use map" #-}
+{-# HLINT ignore "Eta reduce" #-}
+
 import Data.Char (toUpper)
-import GHC.CmmToAsm.AArch64.Instr (_d)
 
 -- * Another example of loop
 -- ? Returns a list of the square of every number of the list input

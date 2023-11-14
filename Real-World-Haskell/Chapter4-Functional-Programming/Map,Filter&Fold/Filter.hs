@@ -1,4 +1,3 @@
-import GHC.CmmToAsm.AArch64.Instr (_d)
 -- * Here is a function that walks a list of numbers and returns those that are odd
 oddList :: [Int] -> [Int]
 oddList (x:xs) | odd x      = x : oddList xs

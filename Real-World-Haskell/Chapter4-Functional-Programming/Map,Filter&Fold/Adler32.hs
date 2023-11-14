@@ -1,5 +1,5 @@
 import Data.Char (ord)
-import Data.Bits (shiftL, (.&.), (.|.), Bits (shift))
+import Data.Bits (shiftL, (.&.), (.|.))
 
 -- ? shiftL function implements a logical shift left
 -- ? (.&.) operator provides a bitwise "and"
@@ -8,13 +8,16 @@ import Data.Bits (shiftL, (.&.), (.|.), Bits (shift))
 base :: Int
 base = 65521
 
+-- * The classic adler32 checksum
+-- * It concatenates two 16-bit checksums into a single 32-bit checksum
 adler32 :: [Char] -> Int
 adler32 xs = helper 1 0 xs
     where
         helper a b (x:xs) = let 
                                a' = (a + (ord x .&. 0xff)) `mod` base
                                b' = (a' + b) `mod` base
-                            in helper a' b' xs
+                            in 
+                                helper a' b' xs
         helper a b _      = (b `shiftL` 16) .|. a 
 
 
@@ -22,10 +25,11 @@ adler32 xs = helper 1 0 xs
 adler32_try2 :: [Char] -> Int
 adler32_try2 xs = helper (1,0) xs
     where
-        helper (a,b) (x:xs) = let 
-                               a' = (a + (ord x .&. 0xff)) `mod` base
-                               b' = (a' + b) `mod` base
-                            in helper (a',b') xs
+        helper (a,b) (x:xs) =   let 
+                                    a' = (a + (ord x .&. 0xff)) `mod` base
+                                    b' = (a' + b) `mod` base
+                                in 
+                                    helper (a',b') xs 
         helper (a,b) _      = (b `shiftL` 16) .|. a 
 
 
