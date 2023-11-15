@@ -40,7 +40,7 @@ adler32_foldl xs =  let
 
 
 -- * Definition of foldr
--- ? foldl :: (a -> b -> b) -> b -> [a] -> b
+-- ? foldr :: (a -> b -> b) -> b -> [a] -> b
 -- ? foldr step zero (x:xs) = step x (foldr step zero xs)
 -- ? foldr _    zero []     = zero
 
