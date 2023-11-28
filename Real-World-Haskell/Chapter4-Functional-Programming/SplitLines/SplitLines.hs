@@ -1,3 +1,6 @@
+-- ! You should compile this file for properly use it
+-- * Or you can use the command runghc SplitLines.hs "<input file>" "<output file>"
+
 import System.Environment (getArgs)
 
 -- * Return a list of Strings using the line terminator as the delimiters between in the String input
