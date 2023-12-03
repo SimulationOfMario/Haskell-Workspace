@@ -1,5 +1,7 @@
 {-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
 {-# HLINT ignore "Use camelCase" #-}
+{-# HLINT ignore "Use concat" #-}
+{-# HLINT ignore "Eta reduce" #-}
 
 import Data.Char (digitToInt)
 import Data.Either (Either)  -- * New data type: Either a b = Right b | Left a 
@@ -62,5 +64,6 @@ asInt_either s
 
 -- TODO: Write your own definition of the Prelude concat function using foldr
 concat_foldr :: [[a]] -> [a]
-concat_foldr _ = []
+concat_foldr x = foldr (++) [] x
+        
 
