@@ -15,8 +15,8 @@
     
     //Arguments for ghci 
     "haskellShell.ghci.arguments": [
-        " -XScopedTypeVariables "
-    ]
 
+    ]
+    //" -XScopedTypeVariables "
 }
 
