@@ -1,3 +1,6 @@
+{-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
+{-# HLINT ignore "Use foldr" #-}
+
 -- Custom not function
 myNot :: Bool -> Bool
 myNot True = False
