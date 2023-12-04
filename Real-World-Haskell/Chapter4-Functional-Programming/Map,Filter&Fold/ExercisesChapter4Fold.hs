@@ -62,20 +62,23 @@ asInt_either s
 
 
 
--- TODO: Write your own definition of the Prelude concat function using foldr
+-- TODO: Write your own definition of the Prelude `concat` function using foldr
 concat_foldr :: [[a]] -> [a]
 concat_foldr x = foldr (++) [] x
 
 
 
--- TODO: Write your own definition of the standard takeWhile function using explicit recursion
+-- TODO: Write your own definition of the standard `takeWhile` function using explicit recursion
 takeWhile_ER :: (a -> Bool) -> [a] -> [a]
 takeWhile_ER _ []   = []
 takeWhile_ER f (x:xs) 
     | f x           = x : takeWhile_ER f xs
     | otherwise     = []
 
-
--- TODO: Write your own definition of the standard takeWhile function using foldr
+-- TODO: Write your own definition of the standard `takeWhile` function using foldr
 takeWhile_foldr :: (a -> Bool) -> [a] -> [a]
-takeWhile_foldr f x = [] 
+takeWhile_foldr f list = foldr step [] list 
+    where
+        step x res 
+            | f x       = x : res
+            | otherwise = []
