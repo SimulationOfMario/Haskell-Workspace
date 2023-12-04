@@ -1,3 +1,4 @@
+
 -- [Example of the Top-Level Identation Rule (incorrectly)]
 
 -- This is the leftmost column

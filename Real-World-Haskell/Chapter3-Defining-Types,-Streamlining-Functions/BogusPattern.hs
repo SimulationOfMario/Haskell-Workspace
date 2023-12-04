@@ -1,3 +1,4 @@
+
 {-# OPTIONS_GHC -Wno-overlapping-patterns #-}
 
 data Fruit = Apple | Orange

@@ -1,3 +1,4 @@
+
 -- * Use the command runghc InteractWith.hs "<input file>" "<output file>"
 -- ? This program copy the text of one file into another one
 
