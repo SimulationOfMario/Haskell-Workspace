@@ -5,7 +5,7 @@
 
 import Data.Char (digitToInt)
 import Data.Either (Either)  -- * New data type: Either a b = Right b | Left a 
-
+import Data.List (groupBy)
 
 -- TODO: Use a fold to rewrite and improve upon the asInt function from the file: IntParse.hs
 -- TODO: Extend the function to handle some kinds of exceptional conditions
@@ -82,3 +82,40 @@ takeWhile_foldr f list = foldr step [] list
         step x res 
             | f x       = x : res
             | otherwise = []
+
+
+
+-- TODO: Write your own implementation of the Data.List `groupBy` function using foldr
+groupBy_foldr :: (a -> a -> Bool) -> [a] -> [[a]]
+groupBy_foldr f list = foldr step [] list
+    where
+        step x []               = [[x]]
+        step x [r]
+            | all check r       = [x : r]
+            | otherwise         = step x [] ++ [r]
+            where 
+                check y = f x y
+        step x rL               = step x (init rL) ++ [last rL]
+
+-- TODO: Write your own implementation of the Data.List `groupBy` function using foldl
+groupBy_foldl :: (a -> a -> Bool) -> [a] -> [[a]]
+groupBy_foldl f list = foldl step [] list
+    where
+        step [] x               = [[x]]
+        step [r] x
+            | all check r       = [r ++ [x]]
+            | otherwise         = r : step [] x
+            where 
+                check y = f x y
+        step (r:rs) x               = r : step rs x
+
+-- ? Example function to use as an input argument for groupBy_fold
+compMod :: Int -> Int -> Bool
+compMod x y = x `mod` b == y `mod` b
+    where 
+        b :: Int
+        b = 2
+
+-- ? Example input list argument for groupBy_fold
+listExample1 :: [Int]
+listExample1 = [1,1, 2,4,6, 3,5,7, 0,-2,-4,8, 1,1,3, 2, 5,7, 4, 3, 2, 7]
