@@ -5,7 +5,8 @@
 
 import Data.Char (digitToInt)
 import Data.Either (Either)  -- * New data type: Either a b = Right b | Left a 
-import Data.List (groupBy)
+import Data.List (groupBy, foldl')
+
 
 -- TODO: Use a fold to rewrite and improve upon the asInt function from the file: IntParse.hs
 -- TODO: Extend the function to handle some kinds of exceptional conditions
@@ -13,7 +14,7 @@ asInt_foldl :: String -> Int
 asInt_foldl ""              = 0                             -- Empty string case
 asInt_foldl s   
     | head s == '-'         = (-1) * asInt_foldl (tail s)   -- Negative number case
-    | otherwise             = foldl step 0 s                -- General case
+    | otherwise             = foldl' step 0 s                -- General case
     where
         numbers :: String
         numbers = "1234567890"
@@ -37,7 +38,7 @@ asInt_either :: String -> Either ErrorMessage Int
 asInt_either ""             = Right 0                              -- Empty string case
 asInt_either s   
     | head s == '-'         = applyNeg (asInt_either (tail s))     -- Negative number case
-    | otherwise             = foldl step (Right 0) s               -- General case
+    | otherwise             = foldl' step (Right 0) s               -- General case
     where
         applyNeg :: Either ErrorMessage Int -> Either ErrorMessage Int
         applyNeg (Right n) = Right ((-1)*n)
@@ -99,7 +100,7 @@ groupBy_foldr f list = foldr step [] list
 
 -- TODO: Write your own implementation of the Data.List `groupBy` function using foldl
 groupBy_foldl :: (a -> a -> Bool) -> [a] -> [[a]]
-groupBy_foldl f list = foldl step [] list
+groupBy_foldl f list = foldl' step [] list
     where
         step [] x               = [[x]]
         step [r] x
@@ -119,3 +120,7 @@ compMod x y = x `mod` b == y `mod` b
 -- ? Example input list argument for groupBy_fold
 listExample1 :: [Int]
 listExample1 = [1,1, 2,4,6, 3,5,7, 0,-2,-4,8, 1,1,3, 2, 5,7, 4, 3, 2, 7]
+
+
+
+-- TODO: Exercise 10
