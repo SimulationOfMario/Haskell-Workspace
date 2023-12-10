@@ -2,6 +2,7 @@
 {-# HLINT ignore "Use camelCase" #-}
 {-# HLINT ignore "Use concat" #-}
 {-# HLINT ignore "Eta reduce" #-}
+{-# HLINT ignore "Use list comprehension" #-}
 
 import Data.Char (digitToInt)
 import Data.Either (Either)  -- * New data type: Either a b = Right b | Left a 
@@ -168,11 +169,46 @@ cycle_foldr list = foldr step [] list
 
 
 
+-- TODO: Write your own implementation of the Data.List `words` function using foldr
+words_foldr :: String -> [String]
+words_foldr str = fixFirst $ foldr step [] str
+    where
+        isSeparator x = x `elem` "\n\t\r "
+
+        step c []           = if isSeparator c then [] else [[c]]
+        step c res
+            | isSeparator c = if null $ head res then res else [] : res
+            | otherwise     = (c : head res) : tail res
+        
+        fixFirst list = if not (null list) && null (head list) then tail list else list
+        
+
 -- TODO: Write your own implementation of the Data.List `words` function using foldl
 words_foldl :: String -> [String]
-words_foldl str = foldl' step [] str
+words_foldl str = fixLast $ foldl' step [] str
     where
-        step res x = if last res == [] && any (==x) "\n\r\t "
-                     then res ++ []
-                     else 
-            
+        isSeparator x = x `elem` "\n\t\r "
+
+        step [] c           = if isSeparator c then [] else [[c]]
+        step res c
+            | isSeparator c = if null $ last res then res else res ++ [[]]
+            | otherwise     = init res ++ [last res ++ [c]]
+
+        fixLast list = if not (null list) && null (last list) then init list else list
+        
+
+
+-- TODO: Write your own implementation of the Data.List `unlines` function using foldr
+unlines_foldr :: [String] -> String
+unlines_foldr list = foldr step "" list
+    where 
+        step word ""    = word ++ "\n"
+        step word res   = word ++ "\n" ++ res 
+
+
+-- TODO: Write your own implementation of the Data.List `unlines` function using foldl
+unlines_foldl :: [String] -> String
+unlines_foldl list = foldl' step "" list
+    where 
+        step "" word    = word ++ "\n"
+        step res word   = res ++ word ++ "\n" 
