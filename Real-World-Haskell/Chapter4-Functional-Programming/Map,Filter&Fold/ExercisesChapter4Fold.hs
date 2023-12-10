@@ -69,14 +69,14 @@ concat_foldr x = foldr (++) [] x
 
 
 
--- TODO: Write your own definition of the standard `takeWhile` function using explicit recursion
+-- TODO: Write your own definition of the Prelude `takeWhile` function using explicit recursion
 takeWhile_ER :: (a -> Bool) -> [a] -> [a]
 takeWhile_ER _ []   = []
 takeWhile_ER f (x:xs) 
     | f x           = x : takeWhile_ER f xs
     | otherwise     = []
 
--- TODO: Write your own definition of the standard `takeWhile` function using foldr
+-- TODO: Write your own definition of the Prelude `takeWhile` function using foldr
 takeWhile_foldr :: (a -> Bool) -> [a] -> [a]
 takeWhile_foldr f list = foldr step [] list 
     where
@@ -98,6 +98,7 @@ groupBy_foldr f list = foldr step [] list
                 check y = f x y
         step x rL               = step x (init rL) ++ [last rL]
 
+
 -- TODO: Write your own implementation of the Data.List `groupBy` function using foldl
 groupBy_foldl :: (a -> a -> Bool) -> [a] -> [[a]]
 groupBy_foldl f list = foldl' step [] list
@@ -110,12 +111,14 @@ groupBy_foldl f list = foldl' step [] list
                 check y = f x y
         step (r:rs) x               = r : step rs x
 
+
 -- ? Example function to use as an input argument for groupBy_fold
 compMod :: Int -> Int -> Bool
 compMod x y = x `mod` b == y `mod` b
     where 
         b :: Int
-        b = 2
+        b = 2       -- You can change this number
+
 
 -- ? Example input list argument for groupBy_fold
 listExample1 :: [Int]
@@ -123,4 +126,53 @@ listExample1 = [1,1, 2,4,6, 3,5,7, 0,-2,-4,8, 1,1,3, 2, 5,7, 4, 3, 2, 7]
 
 
 
--- TODO: Exercise 10
+-- TODO: Write your own implementation of the Data.List `any` function using foldl
+any_foldl :: Foldable t => (a -> Bool) -> t a -> Bool
+any_foldl f list = foldl' step False list
+    where
+        step True _     = True
+        step _ x        = f x
+
+
+-- TODO: Write your own implementation of the Data.List `any` function using foldr
+any_foldr :: Foldable t => (a -> Bool) -> t a -> Bool
+any_foldr f list = foldr step False list
+    where
+        step _ True     = True
+        step x _        = f x
+
+
+
+-- TODO: Write your own implementation of the Prelude `cycle` function using foldl
+cycle_foldl :: (Eq a) => [a] -> [a]
+cycle_foldl list = foldl' step [] list
+    where
+        step res x = if res' == list
+                     then res' ++ step res x
+                     else res'
+            where
+                res' = res ++ [x]
+-- ! I made it using (Eq a), but in the `cycle` definition this does not show up
+
+
+-- TODO: Write your own implementation of the Prelude `cycle` function using foldr
+cycle_foldr :: (Eq a) => [a] -> [a]
+cycle_foldr list = foldr step [] list
+    where
+        step x res = if res' == list
+                     then res' ++ step x res
+                     else res'
+            where
+                res' = x : res
+-- ! I made it using (Eq a), but in the `cycle` definition this does not show up
+
+
+
+-- TODO: Write your own implementation of the Data.List `words` function using foldl
+words_foldl :: String -> [String]
+words_foldl str = foldl' step [] str
+    where
+        step res x = if last res == [] && any (==x) "\n\r\t "
+                     then res ++ []
+                     else 
+            
