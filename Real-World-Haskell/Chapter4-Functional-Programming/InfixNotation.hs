@@ -1,3 +1,6 @@
+{-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
+{-# HLINT ignore "Use infix" #-}
+
 import Data.List (isPrefixOf, isInfixOf, isSuffixOf)
 
 -- * Infix and Prefix notation
