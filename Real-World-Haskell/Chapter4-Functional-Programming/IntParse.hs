@@ -1,4 +1,3 @@
-
 import Data.Char (digitToInt) -- ? A new function! Parses a Char to a Int
 
 -- * Example of parse Int function from String 

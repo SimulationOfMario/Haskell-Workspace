@@ -1,4 +1,7 @@
 -- Multiple Let blocks
+{-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
+{-# HLINT ignore "Redundant bracket" #-}
+
 foo :: Integer
 foo = let a = 1
       in let b = 2

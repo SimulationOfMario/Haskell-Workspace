@@ -1,4 +1,7 @@
 -- Using local functions (inside a Where block)
+{-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
+{-# HLINT ignore "Eta reduce" #-}
+
 pluralise :: String -> [Int] -> [String]
 pluralise word counts = map plural counts
     where

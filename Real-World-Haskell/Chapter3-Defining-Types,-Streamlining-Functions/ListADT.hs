@@ -1,4 +1,8 @@
 -- A custom way to define a list as an example of a recursive data type
+{-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
+{-# HLINT ignore "Use foldr" #-}
+{-# HLINT ignore "Use :" #-}
+
 data List a = Cons a (List a)
             | Nil
             deriving (Show)

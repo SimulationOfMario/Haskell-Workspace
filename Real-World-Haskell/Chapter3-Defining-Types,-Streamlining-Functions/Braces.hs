@@ -1,4 +1,3 @@
-
 -- The following two uses of Let have the same meanings:
 
 bar :: Int

@@ -1,3 +1,6 @@
+{-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
+{-# HLINT ignore "Use null" #-}
+
 -- TODO: Ways to improve `head` function because it crashes if the input is an empty list
 
 -- ! Be careful because if inefficient
