@@ -19,3 +19,11 @@ suffixes _          = []
 
 -- ? The notation xs@(_:xs') is called as-pattern
 -- ? It means "bind the variable xs to the value that matches the right side of the @ symbol"
+
+-- * Let us compare a definition that lacks an as-pattern
+noAsPattern :: [a] -> [[a]]
+noAsPattern (x:xs) = (x:xs) : noAsPattern xs
+noAsPattern _      = []
+-- ! Using (x:xs) in the body function causes to allocate a new list node at runtime
+-- ! That may be cheap, but not is not free
+-- * Using as-pattern we reuse an existing value, that means we avoid a little allocation
