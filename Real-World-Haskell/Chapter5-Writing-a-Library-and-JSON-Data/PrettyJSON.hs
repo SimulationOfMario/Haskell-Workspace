@@ -4,6 +4,8 @@ import SimpleJSON ( JValue(JString, JBool, JNull, JNumber) )
 import PrettyStub ( Doc, text, double, (<>), hcat, char )
 import Prelude hiding ((<>))
 import Numeric ( showHex )
+import Data.Bits ((.&.), shiftR)
+import Data.Char (ord)
 
 
 renderJValue :: JValue -> Doc
@@ -12,7 +14,6 @@ renderJValue (JBool False)  = text "false"
 renderJValue JNull          = text "null"
 renderJValue (JNumber num)  = double num
 renderJValue (JString str)  = string str
-
 
 
 -- ? Pretty print a string value
@@ -42,8 +43,29 @@ simpleEscapes = zipWith ch "\b\n\f\r\t\\\"/" "bnfrt\\\"/"
     where 
         ch a b = (a, ['\\', b]) 
 
+-- ? 
+hexEscape :: Char -> Doc
+hexEscape c | d < 0x10000 = smallHex d
+            | otherwise   = astral (d - 0x10000)
+    where 
+        d = ord c
+-- * The function `ord` turns a char into a int (its ascii value)
+
+
 -- ? Turns a character into the string "\u" followed by a four-character sequence of hexadecimal digits
 smallHex :: Int -> Doc
 smallHex x = text "\\u" <> text (replicate (4 - length h) '0') <> text h 
     where 
         h = showHex x ""
+-- * The `replicate` function is provided by the Prelude and builds a fixed-length repeating list of its second argument
+
+
+-- ? Function for properly represent a character above 0xffff in a JSON string
+astral :: Int -> Doc 
+astral n = smallHex (a + 0xd800) <> smallHex (b + 0xdc00)
+    where
+        a = (n `shiftR` 10) .&. 0x3ff
+        b = n .&. 0x3ff
+
+
+
