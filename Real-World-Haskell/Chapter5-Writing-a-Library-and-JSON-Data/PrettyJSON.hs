@@ -1,9 +1,9 @@
-module PrettyJSON where
+module PrettyJSON (renderJValue) where
 
-import SimpleJSON ( JValue(JString, JBool, JNull, JNumber) )
-import PrettyStub ( Doc, text, double, (<>), hcat, char )
+import SimpleJSON (JValue(..))
+import Prettify (Doc, empty, char, text, double, line, (<>), hcat, fsep, punctuate)
 import Prelude hiding ((<>))
-import Numeric ( showHex )
+import Numeric (showHex)
 import Data.Bits ((.&.), shiftR)
 import Data.Char (ord)
 
@@ -14,9 +14,14 @@ renderJValue (JBool False)  = text "false"
 renderJValue JNull          = text "null"
 renderJValue (JNumber num)  = double num
 renderJValue (JString str)  = string str
+renderJValue (JArray array) = series '[' ']' renderJValue array
+renderJValue (JObject obj)  = series '{' '}' field obj
+    where 
+        field (key, value) = string key <> text ": " <> renderJValue value
 
+--------------------------------------------------------------------------------
 
--- ? Pretty print a string value
+-- ? Pretty prints a string value
 string :: String -> Doc
 string = enclose '"' '"' . hcat . map oneChar
 
@@ -24,9 +29,16 @@ string = enclose '"' '"' . hcat . map oneChar
 pointyString :: String -> Doc
 pointyString s = enclose '"' '"' (hcat (map oneChar s))
 
+-- ? Useful for arrays and objects
+series :: Char -> Char -> (a -> Doc) -> [a] -> Doc
+series open close item = enclose open close . fsep . punctuate (char ',') . map item
+
+--------------------------------------------------------------------------------
+
 -- ? Wraps a Doc value with an opening and closing character
 enclose :: Char -> Char -> Doc -> Doc
 enclose left right x = char left <> x <> char right
+
 
 -- ? Escapes or renders an individual character
 oneChar :: Char -> Doc
@@ -37,11 +49,13 @@ oneChar c = case lookup c simpleEscapes of
     where
         mustEscape c = c < ' ' || c == '\x7f' || c > '\xff'
 
+
 -- ? This is a association list ('alist'), each element associates a character with its escaped representation
 simpleEscapes :: [(Char, String)]
 simpleEscapes = zipWith ch "\b\n\f\r\t\\\"/" "bnfrt\\\"/"
     where 
         ch a b = (a, ['\\', b]) 
+
 
 -- ? 
 hexEscape :: Char -> Doc
@@ -66,6 +80,3 @@ astral n = smallHex (a + 0xd800) <> smallHex (b + 0xdc00)
     where
         a = (n `shiftR` 10) .&. 0x3ff
         b = n .&. 0x3ff
-
-
-
