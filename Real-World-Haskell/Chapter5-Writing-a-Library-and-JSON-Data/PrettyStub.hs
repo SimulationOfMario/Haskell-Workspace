@@ -5,8 +5,8 @@ module PrettyStub where
 data Doc = ToBeDefined 
          deriving (Show)
 
--- string :: String -> Doc
--- string str = undefined
+string :: String -> Doc
+string str = undefined
 
 text :: String -> Doc
 text str = undefined
