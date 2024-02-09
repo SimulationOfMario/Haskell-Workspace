@@ -13,6 +13,10 @@ Maintainer:     nobody@realworldhaskell.org
 
 Cabal-Version:  >= 1.2
 
+packages
+    ghc-options: -package Cabal
+
+
 library
     -- These are the available modules for the users
     Exposed-Modules:    Prettify
