@@ -1,0 +1,35 @@
+Name:           mypretty
+Version:        0.1
+
+-- This is a comment
+-- This file is an example of a cabal file for the prettyJSON library
+
+Synopsis:       My pretty printing library, with JSON support
+Description:
+    A simple pretty-printing library that illustrates how to 
+    develop a Haskell library.
+Author:         Real World Haskell
+Maintainer:     nobody@realworldhaskell.org
+
+Cabal-Version:  >= 1.2
+
+library
+    -- These are the available modules for the users
+    Exposed-Modules:    Prettify
+                        PrettyJSON
+                        SimpleJSON
+
+    -- These are the internal modules of the library (but there is none)
+    Other-Modules: 
+
+    -- These are the packages required to build the library, they must separated by commas
+    -- For every package is optional to include the range of versions with which this library is known to work
+    Build-Depends:      base >= 2.0
+    -- The base package contains many of the core Haskell modules, such as the Prelude
+
+
+-- ? Steps to instruct Cabal how to build and where to install a package:
+-- runghc Setup configure
+-- runghc Setup build
+ 
+
