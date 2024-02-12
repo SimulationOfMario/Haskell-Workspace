@@ -2,6 +2,7 @@
 class BasicEq a where
     isEqual :: a -> a -> Bool
 
+
 -- * An implementation of the typeclass for Bool
 instance BasicEq Bool where
     isEqual :: Bool -> Bool -> Bool
@@ -17,7 +18,7 @@ class BasicEq2 a where
 
 
 -- * Example of default implementations
--- * Only one function must be implemented at least
+-- * Only one function must be implemented (at least)
 class BasicEq3 a where
     isEqual3 :: a -> a -> Bool
     isEqual3 x y = not (isNotEqual3 x y)
@@ -35,3 +36,21 @@ class Eq a where
     x /= y      = not (x == y)
     x == y      = not (x /= y)
 -}
+
+
+data Color = Red | Green | Blue
+
+-- * Implementation of BasicEq3 using Color
+instance BasicEq3 Color where
+    isEqual3 :: Color -> Color -> Bool
+    isEqual3 Red   Red   = True
+    isEqual3 Green Green = True
+    isEqual3 Blue  Blue  = True
+    isEqual3 _     _     = False 
+
+-- * Implementation of Show using Color
+instance Show Color where
+    show :: Color -> String
+    show Red   = "Red"
+    show Green = "Green"
+    show Blue  = "Blue"
