@@ -1,3 +1,4 @@
+-- * Example of Read typeclass
 main :: IO ()
 main = do
     putStrLn "Please enter a Double:"

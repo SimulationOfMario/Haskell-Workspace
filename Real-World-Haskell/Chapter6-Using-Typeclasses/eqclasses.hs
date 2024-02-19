@@ -54,3 +54,32 @@ instance Show Color where
     show Red   = "Red"
     show Green = "Green"
     show Blue  = "Blue"
+
+-- * Implementation of Read using Color
+instance Read Color where
+    -- readsPrec is the main function for parsing input
+    readsPrec :: Int -> ReadS Color
+    readsPrec _ value = tryParse [("Red", Red), ("Green", Green), ("Blue", Blue)]
+        where
+            tryParse [] = []
+            tryParse ((attempt, result):xs) = if take (length attempt) value == attempt
+                                              then [(result, drop (length attempt) value)]
+                                              else tryParse xs
+    -- tryParse will try to match attempt with the input value
+    -- If it has a match, return the result and the remaining input
+    -- If not, it tries with the next attempt
+    -- If the list of attempts is empty, fails
+
+-- Try:
+-- (readsPrec "Red")::Color
+-- (readsPrec "Blue")::Color
+-- (readsPrec "Green")::Color
+-- (readsPrec "[Red,Blue,Green]")::[Color]
+
+
+-- Try:
+-- * writeFile "test" (show [Just 2, Nothing, Just 6])
+-- << A file named test is made and contains that list >>
+-- * input <- readFile "test"
+-- * let result = (read input)::[Maybe Int]
+-- << The list is shown in ghci terminal output >>
