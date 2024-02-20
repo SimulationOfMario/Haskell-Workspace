@@ -30,6 +30,18 @@
     cosh
     acosh
 
+    * Sine, ArcSine, Hyperbolic Sine, Hyperbolic ArcSine
+    sin
+    asin
+    sinh
+    asinh
+
+    * Tangent, ArcTangent, Hyperbolic Tangent, Hyperbolic ArcTangent
+    tan
+    atan
+    tanh
+    atanh
+
     * Integer division always truncated down
     div
 
@@ -68,6 +80,21 @@
 
     * Remainder of integer division
     rem
+
+    * Rounds to nearest integer
+    round
+
+    * Square root
+    sqrt
+
+    * Convert any Integral to an Integer
+    toInteger
+
+    * Convert losslessly to Rational
+    toRational
+
+    * Truncates number towards zero
+    truncate
 -}
 
 {- Data.Ratio
@@ -87,6 +114,9 @@
     * Bitwise OR 
     (.|.)
 
+    * Shift left by the specified number of bits, which may be negative for a right shift
+    shift 
 
-
+    * Bitwise exclusive OR
+    xor
 -}
