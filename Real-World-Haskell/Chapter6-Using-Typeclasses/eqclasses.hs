@@ -40,6 +40,7 @@ class Eq a where
 
 data Color = Red | Green | Blue
 
+
 -- * Implementation of BasicEq3 using Color
 instance BasicEq3 Color where
     isEqual3 :: Color -> Color -> Bool
