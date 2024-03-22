@@ -2,7 +2,6 @@
     //Directories where is located the images for the background
     "background.windowBackgrounds": [
         "${vscode:workspace}/Pictures/Bg Pictures For VSCode/**"
-        
     ],
     
     //Seconds between every change in the background
