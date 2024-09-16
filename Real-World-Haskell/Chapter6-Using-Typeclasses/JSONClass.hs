@@ -26,6 +26,7 @@ doubleToJValue _ _           = Left "Not a JSON Number"
 
 instance JSON Int where
     toJValue = JNumber . realToFrac
+    fromJValue :: JValue -> Either JSONError Int
     fromJValue = doubleToJValue round
 
 instance JSON Integer where
@@ -35,5 +36,14 @@ instance JSON Integer where
 instance JSON Double where
     toJValue = JNumber
     fromJValue = doubleToJValue id
+
+instance (JSON a) => JSON [a] where 
+    toJValue = undefined
+    fromJValue = undefined
+
+instance (JSON a) => JSON [(String, a)] where
+    toJValue = undefined
+    fromJValue = undefined
+
 
 
