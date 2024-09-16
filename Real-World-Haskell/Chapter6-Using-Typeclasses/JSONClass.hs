@@ -1,4 +1,18 @@
-import SimpleJSON
+module JSONClass ( JAry(..), JObj(..) ) where
+import Control.Arrow (second)
+
+{-
+* Correct Implementation
+module JSONClass ( JAry(fromJAry), jary ) where
+-}
+
+data JValue = JString String
+            | JNumber Double
+            | JBool Bool
+            | JNull
+            | JObject (JObj JValue)   -- was [(String, JValue)]
+            | JArray (JAry JValue)    -- was [JValue]
+              deriving (Eq, Ord, Show)
 
 type JSONError = String
 
@@ -37,13 +51,50 @@ instance JSON Double where
     toJValue = JNumber
     fromJValue = doubleToJValue id
 
-instance (JSON a) => JSON [a] where 
-    toJValue = undefined
-    fromJValue = undefined
+-- Arrays
+newtype JAry a = JAry {
+        fromJAry :: [a]
+    }   deriving (Eq, Ord, Show)
 
-instance (JSON a) => JSON [(String, a)] where
-    toJValue = undefined
-    fromJValue = undefined
+{- 
+* Correct implementation
+jAry :: [a] -> JAry a
+jAry = JAry
+-}
+
+instance (JSON a) => JSON (JAry a) where
+    toJValue = jAryToJValue
+    fromJValue = jAryFromJValue
+
+jAryFromJValue :: (JSON a) => JValue -> Either JSONError (JAry a)
+jAryFromJValue (JArray (JAry a)) = whenRight JAry (mapEithers fromJValue a)
+jAryFromJValue _ = Left "Not a JSON Array"
+    
+jAryToJValue :: (JSON a) => JAry a -> JValue
+jAryToJValue = JArray . JAry . map toJValue . fromJAry
 
 
+-- Objects
+newtype JObj a = JObj {
+        fromJObj :: [(String, a)]
+    }   deriving (Eq, Ord, Show)
 
+instance JSON a => JSON (JObj a) where
+    toJValue = JObject . JObj . map (second toJValue) . fromJObj
+
+    fromJValue (JObject (JObj o)) = whenRight JObj (mapEithers unwrap o)
+        where unwrap (k,v) = whenRight ((,) k) (fromJValue v)
+    fromJValue _ = Left "not a JSON object"
+
+
+whenRight :: (b -> c) -> Either a b -> Either a c
+whenRight _ (Left error) = Left error
+whenRight f (Right a)    = Right (f a)
+
+mapEithers :: (a -> Either b c) -> [a] -> Either b [c]
+mapEithers f (x:xs) = case mapEithers f xs of
+                                Left error -> Left error
+                                Right ys   -> case f x of
+                                                Left error -> Left error 
+                                                Right y    -> Right (y:ys)
+mapEithers _ _ = Right []
