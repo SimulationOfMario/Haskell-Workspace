@@ -98,3 +98,6 @@ mapEithers f (x:xs) = case mapEithers f xs of
                                                 Left error -> Left error 
                                                 Right y    -> Right (y:ys)
 mapEithers _ _ = Right []
+
+-- (,) is the constructor for tuples
+-- Also (,,) (,,,) and more exists
